@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each_with_index do |user, index| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><a onclick="show_user(  <%= user.id %> )"> Mostrar</a></td>
+        <td><a onclick="user_edit(  <%= user.id %> , <%= index %> )"> Editar</a></td>
+        <td><a onclick="edit_user_iframe(  <%= user.id %>)"> EditarV2  </a></td>
+        <td><a onclick="show_user_posts( <%= user.id %> )"> MicroPosts</a></td>        
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# Ventana Modal para ver los datos del usuario %>
+<div id="show" style="display:none">
+  <p>
+    <strong> Name: </strong>
+    <p id="name"> </p>
+  </p>
+  <p>
+    <strong> Email: </strong>
+    <p id="email"> </p>
+  </p>
+</div>
+
+
+<%# Ventana Modal para ver los post del usuario %>
+<div id="show_posts" style="display:none">
+  <p>
+    <strong> Post: </strong>
+    <p id="post"> </p>
+  </p>
+</div>
+
+<%# Ventana Modal para editar los datos del usuario %>
+<div id="user_edit" style="display:none">
+  <form action="javascript:void(0);" accept-charset="UTF-8" >
+    <input name="utf8" type="hidden" value="✓">
+    
+    <h2> Editar usuario </h2>
+
+    <div class="field">
+      <label for="user_name">Name</label>
+      <input id="user_name" type="text" value="JuanManuelBéc" name="user[name]">
+    </div>
+
+    <div class="field">
+      <label for="user_email">Email</label>
+      <input id="user_email" type="text" value="Juanmabs22@hotmail.com" name="user[email]">
+    </div>
+
+    <div class="actions">
+      <button onclick="user_edit_save()"> Guardar JSON </button>
+    </div>
+  </form>
+</div>
+
+
+
+<%# Ventana Modal para ver los editar del usuario desde un iframe que darga la página por defecto de efición del usuario%>
+<div id="show_edit_user" style="display:none; min-height:22em;padding: 0;overflow: hidden;">
+  <iframe id="iframe" style="height:15em;border:none;overflow:hidden;width: 107%;"></iframe>
+</div>
+
+<%= link_to 'New User', new_user_path %>
